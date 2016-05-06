@@ -18,6 +18,7 @@
 		B06F73E11CDC2E50004D5149 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06F73DF1CDC2E50004D5149 /* Main.storyboard */; };
 		B06F73EC1CDC2E50004D5149 /* MIDISourceOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F73EB1CDC2E50004D5149 /* MIDISourceOSXTests.swift */; };
 		B06F73F71CDC2E50004D5149 /* MIDISourceOSXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F73F61CDC2E50004D5149 /* MIDISourceOSXUITests.swift */; };
+		B06F74051CDC2EF1004D5149 /* MIDIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F74041CDC2EF1004D5149 /* MIDIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		B06F73F21CDC2E50004D5149 /* MIDISourceOSXUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDISourceOSXUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B06F73F61CDC2E50004D5149 /* MIDISourceOSXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDISourceOSXUITests.swift; sourceTree = "<group>"; };
 		B06F73F81CDC2E50004D5149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B06F74041CDC2EF1004D5149 /* MIDIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		B06F73CD1CDC2E50004D5149 /* MIDISourceOSX */ = {
 			isa = PBXGroup;
 			children = (
+				B06F74041CDC2EF1004D5149 /* MIDIManager.swift */,
 				B06F73CE1CDC2E50004D5149 /* AppDelegate.swift */,
 				B06F73D01CDC2E50004D5149 /* ViewController.swift */,
 				B06F73D71CDC2E50004D5149 /* Credits.html */,
@@ -281,6 +284,7 @@
 			files = (
 				B06F73D41CDC2E50004D5149 /* README.md in Sources */,
 				B06F73D11CDC2E50004D5149 /* ViewController.swift in Sources */,
+				B06F74051CDC2EF1004D5149 /* MIDIManager.swift in Sources */,
 				B06F73CF1CDC2E50004D5149 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

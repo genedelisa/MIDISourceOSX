@@ -13,7 +13,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        MIDIManager.sharedInstance.initMIDI()
     }
 
     override var representedObject: AnyObject? {
@@ -22,6 +22,11 @@ class ViewController: NSViewController {
         }
     }
 
+    @IBAction func playAction(sender: NSButton) {
+        let musicSequence = MIDIManager.sharedInstance.createMusicSequence()
+        MIDIManager.sharedInstance.createPlayer(musicSequence)
+        MIDIManager.sharedInstance.startPlaying()
+    }
 
 }
 
