@@ -19,6 +19,7 @@
 		B06F73EC1CDC2E50004D5149 /* MIDISourceOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F73EB1CDC2E50004D5149 /* MIDISourceOSXTests.swift */; };
 		B06F73F71CDC2E50004D5149 /* MIDISourceOSXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F73F61CDC2E50004D5149 /* MIDISourceOSXUITests.swift */; };
 		B06F74051CDC2EF1004D5149 /* MIDIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F74041CDC2EF1004D5149 /* MIDIManager.swift */; };
+		B06F74071CDCC1FE004D5149 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F74061CDCC1FE004D5149 /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		B06F73F61CDC2E50004D5149 /* MIDISourceOSXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDISourceOSXUITests.swift; sourceTree = "<group>"; };
 		B06F73F81CDC2E50004D5149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B06F74041CDC2EF1004D5149 /* MIDIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDIManager.swift; sourceTree = "<group>"; };
+		B06F74061CDCC1FE004D5149 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				B06F73DF1CDC2E50004D5149 /* Main.storyboard */,
 				B06F73E21CDC2E50004D5149 /* Info.plist */,
 				B06F73D21CDC2E50004D5149 /* Supporting Files */,
+				B06F74061CDCC1FE004D5149 /* Preferences.swift */,
 			);
 			path = MIDISourceOSX;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			files = (
 				B06F73D41CDC2E50004D5149 /* README.md in Sources */,
 				B06F73D11CDC2E50004D5149 /* ViewController.swift in Sources */,
+				B06F74071CDCC1FE004D5149 /* Preferences.swift in Sources */,
 				B06F74051CDC2EF1004D5149 /* MIDIManager.swift in Sources */,
 				B06F73CF1CDC2E50004D5149 /* AppDelegate.swift in Sources */,
 			);

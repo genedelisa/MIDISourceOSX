@@ -2,11 +2,14 @@
 
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://en.wikipedia.org/wiki/MIT_License)
-[![Build Status](https://travis-ci.org/genedelisa/TableBinding.svg)](https://travis-ci.org/genedelisa/MIDISourceOSX)
-[![GitHub tag](https://img.shields.io/github/tag/genedelisa/tablebinding.svg)](https://github.com/genedelisa/MIDISourceOSX/)
-[![GitHub release](https://img.shields.io/github/release/genedelisa/tablebinding.svg)](https://github.com/genedelisa/MIDISourceOSX/)
+[![Build Status](https://travis-ci.org/genedelisa/MIDISourceOSX.svg)](https://travis-ci.org/genedelisa/MIDISourceOSX)
+[![GitHub tag](https://img.shields.io/github/tag/genedelisa/MIDISourceOSX.svg)](https://github.com/genedelisa/MIDISourceOSX/)
+[![GitHub release](https://img.shields.io/github/release/genedelisa/MIDISourceOSX.svg)](https://github.com/genedelisa/MIDISourceOSX/)
+[![Swift 2](https://img.shields.io/badge/swift2.2-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
+[![Platform (OSX)](https://img.shields.io/badge/platform-osx-blue.svg?style=flat-square)](http://www.apple.com/osx/)
 
-An example using
+
+An example that shows how to play a MusicSequence to a virtual source via a virtual destination.
 
 
 ## Blog post for this example.
@@ -17,7 +20,7 @@ An example using
 ## Bugs
 
 
-[![GitHub issues](https://img.shields.io/github/issues/genedelisa/tablebinding.svg)](https://github.com/genedelisa/MIDISourceOSX/issues)
+[![GitHub issues](https://img.shields.io/github/issues/genedelisa/MIDISourceOSX.svg)](https://github.com/genedelisa/MIDISourceOSX/issues)
 
 If you find one, [please add it to issues](https://github.com/genedelisa/MIDISourceOSX/issues)
 

@@ -14,8 +14,14 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         MIDIManager.sharedInstance.initMIDI()
-    }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector:(#selector(NSWindowDelegate.windowWillClose(_:))),
+                                                         name:NSWindowWillCloseNotification,
+                                                         object:self.view.window)
 
+    }
+    
     override var representedObject: AnyObject? {
         didSet {
         // Update the view, if already loaded.
@@ -27,6 +33,9 @@ class ViewController: NSViewController {
         MIDIManager.sharedInstance.createPlayer(musicSequence)
         MIDIManager.sharedInstance.startPlaying()
     }
+    
+    func windowWillClose(notification: NSNotification) {
+        NSApplication.sharedApplication().terminate(0)
+    }
 
 }
-

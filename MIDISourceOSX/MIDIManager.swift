@@ -1,6 +1,6 @@
 //
 //  MIDIManager.swift
-//  MIDIAnimation
+//  MIDISourceOSX
 //
 //  Created by Gene De Lisa on 6/9/15.
 //  Copyright © 2015 Gene De Lisa. All rights reserved.
@@ -8,9 +8,10 @@
 
 import Foundation
 import CoreMIDI
-//import CoreAudio
 import AudioToolbox
 
+
+//http://blog.willbenton.com/2003/12/os-x-audio-toolbox-programming-tip-of-the-day/
 
 /**
  # MIDIManager
