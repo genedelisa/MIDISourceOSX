@@ -11,12 +11,10 @@ import CoreMIDI
 import AudioToolbox
 
 
-//http://blog.willbenton.com/2003/12/os-x-audio-toolbox-programming-tip-of-the-day/
-
 /**
  # MIDIManager
  
- > Here is an initial cut at using the new Swift 2.0 MIDI frobs.
+ > Here is an example of using virtual MIDI sources and destinations.
  
  */
 class MIDIManager : NSObject {
@@ -25,17 +23,11 @@ class MIDIManager : NSObject {
     
     var midiClient = MIDIClientRef()
     
-    var outputPort = MIDIPortRef()
-    
-    var inputPort = MIDIPortRef()
-    
     var virtualDestinationEndpointRef = MIDIEndpointRef()
     
     var virtualSourceEndpointRef = MIDIEndpointRef()
     
-    typealias MIDINotifier = (message:UnsafePointer<MIDINotification>) -> ()
-    
-    var midiNotifier: MIDINotifier?
+    var midiNotifier: MIDINotifyBlock?
     
     var midiReadBlock:MIDIReadBlock?
     
@@ -91,10 +83,12 @@ class MIDIManager : NSObject {
                 print("midi virtual source created \(virtualSourceEndpointRef)")
             }
             saveVirtualSourceID()
+            
         }
         
     }
     
+    // MARK: ID chacha
     func saveVirtualSourceID() {
         
         
@@ -154,6 +148,7 @@ class MIDIManager : NSObject {
     let savedVirtualDestinationKey = "savedVirtualDestinationKey"
     let savedVirtualSourceKey = "savedVirtualSourceKey"
     
+    //MARK: - Callbacks
     
     func myNotifyCallback(message:UnsafePointer<MIDINotification>) -> Void {
         print("got a MIDINotification!")
@@ -176,16 +171,6 @@ class MIDIManager : NSObject {
             print("child type \(m.childType)")
             print("parent \(m.parent)")
             print("parentType \(m.parentType)")
-            
-            //            let m:MIDIObjectAddRemoveNotification =
-            //            unsafeBitCast(notification, MIDIObjectAddRemoveNotification.self)
-            //
-            //            print("id \(m.messageID)")
-            //            print("size \(m.messageSize)")
-            //            print("child \(m.child)")
-            //            print("child type \(m.childType)")
-            //            print("parent \(m.parent)")
-            //            print("parentType \(m.parentType)")
             
             break
             
@@ -231,8 +216,6 @@ class MIDIManager : NSObject {
     }
     
     
-    
-    
     ///  Take the packets emitted frome the MusicSequence and forward them to the virtual source.
     ///
     ///  - parameter packetList:    packets from the MusicSequence
@@ -242,6 +225,7 @@ class MIDIManager : NSObject {
         MIDIReceived(virtualSourceEndpointRef, packetList)
     }
     
+    //MARK: - Utilities
     
     /**
      Not as detailed as Adamson's CheckError, but adequate.
@@ -416,63 +400,6 @@ class MIDIManager : NSObject {
             
         default:
             print("huh?")
-        }
-    }
-    func showError(status:OSStatus) {
-        
-        switch status {
-            
-        case OSStatus(kMIDIInvalidClient):
-            print("invalid client")
-            break
-        case OSStatus(kMIDIInvalidPort):
-            print("invalid port")
-            break
-        case OSStatus(kMIDIWrongEndpointType):
-            print("invalid endpoint type")
-            break
-        case OSStatus(kMIDINoConnection):
-            print("no connection")
-            break
-        case OSStatus(kMIDIUnknownEndpoint):
-            print("unknown endpoint")
-            break
-            
-        case OSStatus(kMIDIUnknownProperty):
-            print("unknown property")
-            break
-        case OSStatus(kMIDIWrongPropertyType):
-            print("wrong property type")
-            break
-        case OSStatus(kMIDINoCurrentSetup):
-            print("no current setup")
-            break
-        case OSStatus(kMIDIMessageSendErr):
-            print("message send")
-            break
-        case OSStatus(kMIDIServerStartErr):
-            print("server start")
-            break
-        case OSStatus(kMIDISetupFormatErr):
-            print("setup format")
-            break
-        case OSStatus(kMIDIWrongThread):
-            print("wrong thread")
-            break
-        case OSStatus(kMIDIObjectNotFound):
-            print("object not found")
-            break
-            
-        case OSStatus(kMIDIIDNotUnique):
-            print("not unique")
-            break
-            
-        case OSStatus(kMIDINotPermitted):
-            print("not permitted")
-            break
-            
-        default:
-            print("dunno \(status)")
         }
     }
     

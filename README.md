@@ -14,7 +14,7 @@ An example that shows how to play a MusicSequence to a virtual source via a virt
 
 ## Blog post for this example.
 
-[Blog post](http://www.rockhoppertech.com/blog/)
+[Blog post](http://www.rockhoppertech.com/blog/musicsequence-via-a-midi-virtual-source/)
 
 
 ## Bugs
