@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -683,9 +684,44 @@
                                     <action selector="playAction:" target="XfG-lQ-9wD" id="gBd-gu-P0x"/>
                                 </connections>
                             </button>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4LP-CT-M72">
+                                <rect key="frame" x="156.5" y="78" width="167" height="21"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Afh-8B-6cf">
+                                        <rect key="frame" x="-6" y="-7" width="91" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Note On" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2yH-py-2pD">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="noteOnAction:" target="XfG-lQ-9wD" id="wyQ-hF-daT"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Aqc-Uo-kkQ">
+                                        <rect key="frame" x="81" y="-7" width="92" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Note Off" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="w7N-pa-qZu">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="noteOffAction:" target="XfG-lQ-9wD" id="ShU-xG-VDv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="7ab-FB-PGe" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="UJM-eL-ljh"/>
+                            <constraint firstItem="4LP-CT-M72" firstAttribute="top" secondItem="7ab-FB-PGe" secondAttribute="bottom" constant="26" id="bVn-Uk-0bN"/>
+                            <constraint firstItem="4LP-CT-M72" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="eiv-yI-ZHw"/>
                             <constraint firstItem="7ab-FB-PGe" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="pzX-94-4fF"/>
                         </constraints>
                     </view>

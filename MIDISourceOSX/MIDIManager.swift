@@ -88,7 +88,9 @@ class MIDIManager : NSObject {
                     print("name is \(name)")
                 }
             }
-            
+            // or
+            let pn = getStringProperty(kMIDIPropertyName, midiObject: virtualDestinationEndpointRef)
+            print("vd name is \(pn)")
             
             
             //use MIDIReceived to transmit MIDI messages from your virtual source to any clients connected to the virtual source. Since we're using a MusicSequence, we need to use a virtual dest to catch the events and forward them via MIDIReceived.
@@ -450,8 +452,10 @@ class MIDIManager : NSObject {
     func getProperties(midiObject:MIDIObjectRef) -> (OSStatus, Dictionary<String, AnyObject>?) {
         var properties:Unmanaged<CFPropertyList>?
         let status = MIDIObjectGetProperties(midiObject, &properties, true)
+        defer { properties?.release() }
         if status != noErr {
             print("error getting properties \(status)")
+            CheckError(status)
             return (status, nil)
         }
         
@@ -462,7 +466,64 @@ class MIDIManager : NSObject {
         }
     }
     
+    func getStringProperty(propertyName: CFStringRef, midiObject: MIDIObjectRef) -> String {
+        var property: Unmanaged<CFString>?
+        let status = MIDIObjectGetStringProperty(midiObject, propertyName, &property)
+        defer { property?.release() }
+        if status != noErr {
+            print("error getting string \(propertyName) : \(status)")
+            CheckError(status)
+            return "status error"
+        }
+        print("prop \(property)")
+//        if let prop = property?.takeUnretainedValue() as? String {
+//            property?.release()
+//            return prop
+//        }
+        
+        let cfstring = Unmanaged.fromOpaque(
+            property!.toOpaque()).takeUnretainedValue() as CFStringRef
+        if CFGetTypeID(cfstring) == CFStringGetTypeID(){
+            return cfstring as String
+        }
+        
+        return "unknown error"
+    }
+
+    // send directly to the midi source
+    func noteOnReceive() {
+        var packet       = MIDIPacket()
+        packet.timeStamp = 0
+        packet.length    = 3
+        packet.data.0    = UInt8(0x90)
+        packet.data.1    = UInt8(60)
+        packet.data.2    = UInt8(100)
+        
+        var packetlist = MIDIPacketList(numPackets: 1, packet:
+            packet)
+        let status = MIDIReceived(virtualSourceEndpointRef, &packetlist)
+        if status != noErr {
+            print("bad status \(status) receiving msg")
+            CheckError(status)
+        }
+    }
     
+    func noteOffReceive() {
+        var packet       = MIDIPacket()
+        packet.timeStamp = 0
+        packet.length    = 3
+        packet.data.0    = UInt8(0x90) // note on with vel 0 turns off
+        packet.data.1    = UInt8(60)
+        packet.data.2    = UInt8(0)
+        
+        var packetlist = MIDIPacketList(numPackets: 1, packet:
+            packet)
+        let status = MIDIReceived(virtualSourceEndpointRef, &packetlist)
+        if status != noErr {
+            print("bad status \(status) receiving msg")
+            CheckError(status)
+        }
+    }
     
     
     
@@ -472,7 +533,7 @@ class MIDIManager : NSObject {
         // create the sequence
         var musicSequence:MusicSequence = nil
         var status = NewMusicSequence(&musicSequence)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("bad status \(status) creating sequence")
             CheckError(status)
         }
@@ -480,7 +541,7 @@ class MIDIManager : NSObject {
         // add a track
         var track:MusicTrack = nil
         status = MusicSequenceNewTrack(musicSequence, &track)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("error creating track \(status)")
             CheckError(status)
         }
@@ -494,7 +555,7 @@ class MIDIManager : NSObject {
                                        releaseVelocity: 0,
                                        duration: 1.0 )
             status = MusicTrackNewMIDINoteEvent(track, beat, &mess)
-            if status != OSStatus(noErr) {
+            if status != noErr {
                 CheckError(status)
             }
             beat += 1
@@ -503,7 +564,7 @@ class MIDIManager : NSObject {
         //loopTrack(track)
         
         status = MusicSequenceSetMIDIEndpoint(musicSequence, virtualDestinationEndpointRef)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             CheckError(status)
         }
         
@@ -515,17 +576,17 @@ class MIDIManager : NSObject {
         
         var status = OSStatus(noErr)
         status = NewMusicPlayer(&musicPlayer)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("bad status \(status) creating player")
             CheckError(status)
         }
         status = MusicPlayerSetSequence(musicPlayer, musicSequence)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("setting sequence \(status)")
             CheckError(status)
         }
         status = MusicPlayerPreroll(musicPlayer)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("prerolling player \(status)")
             CheckError(status)
         }
@@ -540,7 +601,7 @@ class MIDIManager : NSObject {
         if playing != false {
             print("music player is playing. stopping")
             status = MusicPlayerStop(musicPlayer)
-            if status != OSStatus(noErr) {
+            if status != noErr {
                 print("Error stopping \(status)")
                 CheckError(status)
                 return
@@ -550,7 +611,7 @@ class MIDIManager : NSObject {
         }
         
         status = MusicPlayerSetTime(musicPlayer, 0)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("setting time \(status)")
             CheckError(status)
             return
@@ -559,7 +620,7 @@ class MIDIManager : NSObject {
         }
         
         status = MusicPlayerStart(musicPlayer)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("Error starting \(status)")
             CheckError(status)
             return
@@ -571,7 +632,7 @@ class MIDIManager : NSObject {
     func stopPlaying() {
         var status = OSStatus(noErr)
         status = MusicPlayerStop(musicPlayer)
-        if status != OSStatus(noErr) {
+        if status != noErr {
             print("Error stopping \(status)")
             CheckError(status)
             return

@@ -34,6 +34,14 @@ class ViewController: NSViewController {
         MIDIManager.sharedInstance.startPlaying()
     }
     
+    @IBAction func noteOnAction(sender: NSButton) {
+        MIDIManager.sharedInstance.noteOnReceive()
+    }
+    
+    @IBAction func noteOffAction(sender: NSButton) {
+        MIDIManager.sharedInstance.noteOffReceive()
+    }
+    
     func windowWillClose(notification: NSNotification) {
         NSApplication.sharedApplication().terminate(0)
     }
