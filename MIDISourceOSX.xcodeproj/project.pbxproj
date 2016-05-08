@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B06F73CF1CDC2E50004D5149 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F73CE1CDC2E50004D5149 /* AppDelegate.swift */; };
 		B06F73D11CDC2E50004D5149 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06F73D01CDC2E50004D5149 /* ViewController.swift */; };
-		B06F73D41CDC2E50004D5149 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B06F73D31CDC2E50004D5149 /* README.md */; };
 		B06F73D61CDC2E50004D5149 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B06F73D51CDC2E50004D5149 /* LICENSE */; };
 		B06F73D81CDC2E50004D5149 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = B06F73D71CDC2E50004D5149 /* Credits.html */; };
 		B06F73DA1CDC2E50004D5149 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B06F73D91CDC2E50004D5149 /* .gitignore */; };
@@ -285,7 +284,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B06F73D41CDC2E50004D5149 /* README.md in Sources */,
 				B06F73D11CDC2E50004D5149 /* ViewController.swift in Sources */,
 				B06F74071CDCC1FE004D5149 /* Preferences.swift in Sources */,
 				B06F74051CDC2EF1004D5149 /* MIDIManager.swift in Sources */,
@@ -511,6 +509,7 @@
 				B06F73FD1CDC2E50004D5149 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B06F73FE1CDC2E50004D5149 /* Build configuration list for PBXNativeTarget "MIDISourceOSXTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +518,7 @@
 				B06F74001CDC2E50004D5149 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B06F74011CDC2E50004D5149 /* Build configuration list for PBXNativeTarget "MIDISourceOSXUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +527,7 @@
 				B06F74031CDC2E50004D5149 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

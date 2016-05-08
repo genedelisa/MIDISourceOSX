@@ -57,6 +57,13 @@ class MIDIManager : NSObject {
             CheckError(status)
         }
         
+        let (s,p) = getProperties(midiClient)
+        if let properties = p where s == noErr {
+            print(properties)
+        }
+        
+        
+        
         if status == OSStatus(noErr) {
             
             status = MIDIDestinationCreateWithBlock(midiClient,
@@ -71,6 +78,18 @@ class MIDIManager : NSObject {
             }
             saveVirtualDestinationID()
             
+            var (s,p) = getProperties(virtualDestinationEndpointRef)
+            if let properties = p where s == noErr {
+                print(properties)
+                if let id = properties[kMIDIPropertyUniqueID as String] {
+                    print("unique id is \(id)")
+                }
+                if let name = properties[kMIDIPropertyName as String] {
+                    print("name is \(name)")
+                }
+            }
+            
+            
             
             //use MIDIReceived to transmit MIDI messages from your virtual source to any clients connected to the virtual source. Since we're using a MusicSequence, we need to use a virtual dest to catch the events and forward them via MIDIReceived.
             status = MIDISourceCreate(midiClient,
@@ -83,6 +102,12 @@ class MIDIManager : NSObject {
                 print("midi virtual source created \(virtualSourceEndpointRef)")
             }
             saveVirtualSourceID()
+            
+            (s,p) = getProperties(virtualSourceEndpointRef)
+            if let properties = p where s == noErr {
+                print(properties)
+            }
+            
             
         }
         
@@ -420,6 +445,24 @@ class MIDIManager : NSObject {
         }
         return s
     }
+    
+    // can't type to CFString since it is not Hashable
+    func getProperties(midiObject:MIDIObjectRef) -> (OSStatus, Dictionary<String, AnyObject>?) {
+        var properties:Unmanaged<CFPropertyList>?
+        let status = MIDIObjectGetProperties(midiObject, &properties, true)
+        if status != noErr {
+            print("error getting properties \(status)")
+            return (status, nil)
+        }
+        
+        if let dict =  properties?.takeUnretainedValue() as? Dictionary<String, AnyObject> {
+            return (status, dict)
+        } else {
+            return (status, nil)
+        }
+    }
+    
+    
     
     
     
