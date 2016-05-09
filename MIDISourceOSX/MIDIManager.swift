@@ -250,7 +250,45 @@ class MIDIManager : NSObject {
     func MIDIPassThru(packetList: UnsafePointer<MIDIPacketList>, srcConnRefCon: UnsafeMutablePointer<Void>) -> Void {
         print("sending packets to source \(packetList)")
         MIDIReceived(virtualSourceEndpointRef, packetList)
+        
+        dumpPacketList(packetList.memory)
     }
+    
+    func dumpPacketList(packetlist:MIDIPacketList) {
+        let packet = packetlist.packet
+        var ap = UnsafeMutablePointer<MIDIPacket>.alloc(1)
+        ap.initialize(packet)
+        for _ in 0 ..< packetlist.numPackets {
+            let p = ap.memory
+            dump(p)
+            ap = MIDIPacketNext(ap)
+        }
+    }
+    
+    func dump(packet:MIDIPacket) {
+        let status = packet.data.0
+        let rawStatus = status & 0xF0 // without channel
+        let channel = status & 0x0F
+        
+        print("timeStamp: \(packet.timeStamp)")
+        print("status: \(status)  \(String(format:"0x%X", status))")
+        print("rawStatus: \(rawStatus) \(String(format:"0x%X", rawStatus))")
+        print("channel: \(channel)")
+        print("length: \(packet.length)")
+        
+        print("data: ", terminator:"")
+        let mirror = Mirror(reflecting: packet.data)
+        for (index,d) in mirror.children.enumerate() {
+            if index == Int(packet.length) {
+                print("")
+                break
+            }
+            let hex = String(format:"0x%X", d.value as! UInt8)
+            print("\(hex) ", terminator:"")
+            //print("d: \(d.label) : \(d.value)")
+        }
+    }
+    
     
     //MARK: - Utilities
     
@@ -448,7 +486,7 @@ class MIDIManager : NSObject {
         return s
     }
     
-    // can't type to CFString since it is not Hashable
+    // can't type Dictionary to CFString since it is not Hashable
     func getProperties(midiObject:MIDIObjectRef) -> (OSStatus, Dictionary<String, AnyObject>?) {
         var properties:Unmanaged<CFPropertyList>?
         let status = MIDIObjectGetProperties(midiObject, &properties, true)
@@ -475,32 +513,26 @@ class MIDIManager : NSObject {
             CheckError(status)
             return "status error"
         }
-        print("prop \(property)")
-//        if let prop = property?.takeUnretainedValue() as? String {
-//            property?.release()
-//            return prop
-//        }
-        
         let cfstring = Unmanaged.fromOpaque(
             property!.toOpaque()).takeUnretainedValue() as CFStringRef
-        if CFGetTypeID(cfstring) == CFStringGetTypeID(){
+        if CFGetTypeID(cfstring) == CFStringGetTypeID() {
             return cfstring as String
         }
         
         return "unknown error"
     }
-
+    
     // send directly to the midi source
     func noteOnReceive() {
         var packet       = MIDIPacket()
-        packet.timeStamp = 0
+        packet.timeStamp = MIDITimeStamp(AudioConvertHostTimeToNanos(AudioGetCurrentHostTime()))
         packet.length    = 3
         packet.data.0    = UInt8(0x90)
         packet.data.1    = UInt8(60)
         packet.data.2    = UInt8(100)
         
-        var packetlist = MIDIPacketList(numPackets: 1, packet:
-            packet)
+        var packetlist = MIDIPacketList(numPackets: 1,
+                                        packet: packet)
         let status = MIDIReceived(virtualSourceEndpointRef, &packetlist)
         if status != noErr {
             print("bad status \(status) receiving msg")
@@ -510,14 +542,14 @@ class MIDIManager : NSObject {
     
     func noteOffReceive() {
         var packet       = MIDIPacket()
-        packet.timeStamp = 0
+        packet.timeStamp = MIDITimeStamp(AudioConvertHostTimeToNanos(AudioGetCurrentHostTime()))
         packet.length    = 3
         packet.data.0    = UInt8(0x90) // note on with vel 0 turns off
         packet.data.1    = UInt8(60)
         packet.data.2    = UInt8(0)
         
-        var packetlist = MIDIPacketList(numPackets: 1, packet:
-            packet)
+        var packetlist = MIDIPacketList(numPackets: 1,
+                                        packet: packet)
         let status = MIDIReceived(virtualSourceEndpointRef, &packetlist)
         if status != noErr {
             print("bad status \(status) receiving msg")
